@@ -1,0 +1,17 @@
+#logo {
+  position: fixed;
+  top: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  pointer-events: none;
+  max-width: 70%;
+  user-select: none;
+}
+
+.a-loader-title {
+  display: none !important;
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  user-select: none;
+}

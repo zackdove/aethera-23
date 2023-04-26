@@ -2,58 +2,143 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <title>Hello, World! - A-Frame</title>
+    <title>Aethera</title>
+    <link rel="stylesheet" href="styles.css" />
     <meta name="description" content="Hello, World! - A-Frame" />
-    <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
+    <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
+    <script src="https://mkwy.fr/js/aframe-extras.js"></script>
+    <!-- cub-env-map -->
+    <script>
+      AFRAME.registerComponent("log", {
+        schema: { type: "string" },
+
+        init: function () {
+          var stringToLog = this.data;
+          console.log(stringToLog);
+        },
+      });
+
+      AFRAME.registerComponent("video-bg-handler", {
+        schema: { type: "string" },
+
+        init: function () {
+          console.log("Play video handler");
+          this.el.components.material.material.map.image.play();
+          console.log(this);
+        },
+      });
+
+      AFRAME.registerComponent("play-sound", {
+        schema: { type: "string" },
+
+        init: function () {
+          console.log(this);
+          this.el.components.sound.playSound();
+          window.addEventListener("click", this.el.components.sound.playSound);
+          window.addEventListener(
+            "touchstart",
+            this.el.components.sound.playSound
+          );
+          window.addEventListener(
+            "pointerdown",
+            this.el.components.sound.playSound
+          );
+        },
+      });
+    </script>
   </head>
   <body>
-    <a-scene vr-mode-ui="enabled: true">
+    <a-scene
+      vr-mode-ui="enabled: true"
+      loading-screen="dotsColor: #ebddea; backgroundColor: black"
+    >
       <a-assets>
         <a-asset-item
           id="cultureGirl"
           src="/assets/culturegirl.glb"
         ></a-asset-item>
+        <video
+          id="aethera_bg_video"
+          playinline
+          loop="true"
+          muted="true"
+          autoplay
+          src="/assets/aethera_bg.webm"
+        ></video>
+        <img id="floor-asset" src="/assets/transparentCircle.png" />
+        <img id="normal" src="/assets/normal.jpeg" />
+        <audio
+          id="audio"
+          src="assets/biosphaira.mp3"
+          loop="true"
+          preload="auto"
+        ></audio>
       </a-assets>
 
+      <a-videosphere src="#aethera_bg_video" video-bg-handler></a-videosphere>
       <a-entity
+        id="dirLight"
         light="type:directional; castShadow:true; intensity: 2"
         position="1 1 1"
       ></a-entity>
 
       <a-entity
-        position="0 0 -4"
+        position="0 0 -3"
         gltf-model="#cultureGirl"
         shadow="receive: false"
       ></a-entity>
 
       <a-entity
-        position="0 0 4"
+        position="0 0 3"
         gltf-model="#cultureGirl"
         shadow="receive: false"
+        rotation="0 180 0"
       ></a-entity>
 
       <a-entity
-        position="4 0 0"
+        position="3 0 0"
         gltf-model="#cultureGirl"
         shadow="receive: false"
+        rotation="0 -90 0"
       ></a-entity>
 
       <a-entity
-        position="-4 0 0"
+        position="-3 0 0"
         gltf-model="#cultureGirl"
         shadow="receive: false"
+        log="Hello, Box!"
+        rotation="0 90 0"
       ></a-entity>
 
       <a-plane
+        src="#floor-asset"
+        material="transparent: true"
         position="0 0 0"
         rotation="-90 0 0"
+        metalness="0.3"
+        roughness="0"
+        normal-map="#normal"
         width="20"
+        cube-env-map="path: /assets/cubemap/; extension: jpeg; reflectivity: 0.9;"
         height="20"
-        color="#ffa3f6"
         shadow="cast: false"
       ></a-plane>
-
-      <a-sky color="#ECECEC"></a-sky>
+      <a-sound
+        src="#audio"
+        autoplay="true"
+        preload="auto"
+        position="0 2 5"
+        play-sound
+      ></a-sound>
     </a-scene>
+
+    <div class="overlay">
+      <img id="logo" src="/assets/logo.png" />
+    </div>
+    <script>
+      document
+        .querySelector("#aethera_bg_video")
+        .components.material.material.map.image.play();
+    </script>
   </body>
 </html>
