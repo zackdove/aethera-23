@@ -4,6 +4,7 @@
     <meta charset="utf-8" />
     <title>Aethera</title>
     <link rel="stylesheet" href="styles.css" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <meta name="description" content="Hello, World! - A-Frame" />
     <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
     <script src="https://mkwy.fr/js/aframe-extras.js"></script>
@@ -51,12 +52,11 @@
     <a-scene
       vr-mode-ui="enabled: true"
       loading-screen="dotsColor: #ebddea; backgroundColor: black"
+      light="defaultLightsEnabled: false"
+      renderer="colorManagement: true"
     >
       <a-assets>
-        <a-asset-item
-          id="cultureGirl"
-          src="/assets/culturegirl.glb"
-        ></a-asset-item>
+        <a-asset-item id="group" src="/assets/group3.glb"></a-asset-item>
         <video
           id="aethera_bg_video"
           playinline
@@ -74,13 +74,18 @@
           preload="auto"
         ></audio>
       </a-assets>
-
+      <a-entity oculus-go-controls></a-entity>
       <a-videosphere src="#aethera_bg_video" video-bg-handler></a-videosphere>
       <a-entity
         id="dirLight"
-        light="type:directional; castShadow:true; intensity: 2"
+        light="type:directional; castShadow:true; intensity: 2; shadowCameraNear: -5"
         position="1 1 1"
       ></a-entity>
+      <a-entity
+        light="type: point; intensity: 0.5; distance: 50; decay: 2"
+        position="0 10 0"
+      ></a-entity>
+      <a-entity light="type: ambient; color: #bbb"></a-entity>
 
       <a-entity
         position="0 0 -3"
@@ -89,25 +94,9 @@
       ></a-entity>
 
       <a-entity
-        position="0 0 3"
-        gltf-model="#cultureGirl"
+        position="0 0 0"
+        gltf-model="#group"
         shadow="receive: false"
-        rotation="0 180 0"
-      ></a-entity>
-
-      <a-entity
-        position="3 0 0"
-        gltf-model="#cultureGirl"
-        shadow="receive: false"
-        rotation="0 -90 0"
-      ></a-entity>
-
-      <a-entity
-        position="-3 0 0"
-        gltf-model="#cultureGirl"
-        shadow="receive: false"
-        log="Hello, Box!"
-        rotation="0 90 0"
       ></a-entity>
 
       <a-plane
