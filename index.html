@@ -24,8 +24,18 @@
 
         init: function () {
           console.log("Play video handler");
+          console.log(this.el);
           this.el.components.material.material.map.image.play();
           console.log(this);
+          this.play();
+          window.addEventListener("touchstart", () => {
+            this.play();
+            this.el.components.material.material.map.image.play();
+          });
+          window.addEventListener("pointerdown", () => {
+            this.play();
+            this.el.components.material.material.map.image.play();
+          });
         },
       });
 
